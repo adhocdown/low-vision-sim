@@ -22,6 +22,7 @@ reality (VR) provides a unique opportunity for normally sighted people to experi
     </ul>
   </li>
 </ul>
+![HVFA Data Example](LowVisionFigures/hvfa.png)
 
 
 <h1>Data Processing</h1>
