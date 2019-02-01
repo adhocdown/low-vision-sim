@@ -1,10 +1,10 @@
 # Immersive Low Vision Simulation
+Visual impairments interfere with normal, daily activities such as driving, reading, and walking. By simulating impairments we may better understand how those afflicted perceive and interact with their environment. Virtual 
+reality (VR) provides a unique opportunity for normally sighted people to experience visual impairments in first person. Accordingly, we have created an immersive simulation that maps patient data from a Humphrey Visual Field Analyzer (HVFA) to the field of view of a head-mounted display. I developed this simulation in 2017 with Unity, C#, Python, and Cg/HLSL. This version of the simulation contains no actual patient data to ensure privacy.
+
 <p><b> Code Notes: </b> I need to tidy that document and add options for more current displays.</p>
 <p><b> GitHub Notes: </b> Add Python scripts folder. Explain processing in more detail.  See link for how to structure license and copyright disclaimers when make public: https://github.com/guillaume-chevalier/LSTM-Human-Activity-Recognition <p>
 
-
-Visual impairments interfere with normal, daily activities such as driving, reading, and walking. By simulating impairments we may better understand how those afflicted perceive and interact with their environment. Virtual 
-reality (VR) provides a unique opportunity for normally sighted people to experience visual impairments in first person. Accordingly, we have created an immersive simulation that maps patient data from a Humphrey Visual Field Analyzer (HVFA) to the field of view of a head-mounted display. I developed this simulation in 2017 with Unity, C#, Python, and Cg/HLSL. This version of the simulation contains no actual patient data to ensure privacy.
 
 <h3>Visual Impairments</h3>
 <p>An estimated 2.9 million Americans are diagnosed with low vision, in which vision is impaired to the degree that it cannot be corrected with glasses alone [1]. The visual impairments expressed by low vision conditions are heterogenous and may therefore vary widely between conditions and even between patients with the same condition. There are several types of visual field loss to consider for simulation:
@@ -58,6 +58,10 @@ The data points are plotted with gaussian interpolation in order to produce an i
 <h3>Visual Field Match</h3>
 <p> The intensity map is scaled to match the field of view (FOV) and pixel density of the head-mounted display. Edge values of the map are extended outward to complete the periphery. </p>
 
+<p align="center">
+  <img width="600" src="LowVisionFigures/FOVMap.PNG" alt="Mapping of the HVFA data to the Oculus Rift CV1 pixel resolution and FOV."> 
+</p>
+
 <p>The simulation uses the known screen dimensions and approximate fields of view of stereoscopic display devices to map patient data to left and right eye screen shaders. The simulation explicitly supports the following VR head-mounted displays:</p>
 <ul>
   <li> Oculus Rift CV1
@@ -67,9 +71,7 @@ The data points are plotted with gaussian interpolation in order to produce an i
 </ul>
 <p> Otherwise, the simulation assumes 960 x 1080 screen dimension and 94 x 104 degree FOV, which matches the specs of the Oculus Rift DK2. See <b> PlatformDefines.cs</b> for more. </p>
 
-<p align="center">
-  <img width="600" src="LowVisionFigures/FOVMap.PNG" alt="Mapping of the HVFA data to the Oculus Rift CV1 pixel resolution and FOV."> 
-</p>
+
 
 
 <h1>Graphical Results</h1>
@@ -78,6 +80,13 @@ The generated map informs two screen shaders, which render directly to the displ
 <p align="center">
   <img width="800" src="LowVisionFigures/LowVisionSimResults.PNG" alt="Graphical results display no scotoma, opacity, and blur fields for left and right eyes"> 
 </p>
+
+
+<h2>Discussion</h2>
+
+We have computationally modeled visual impairments for immersive simulation, which may allow us to better understand both the experience of those with vision loss and vision loss itself. Additionally, the presented work provides an approach to vision loss simulation in which patient data from a perimetry test is leveraged to better represent the heterogeneity of human vision.  
+
+While low vision simulations exist, most are based on the general symptoms of eye diseases [3] and are unable to produce the irregular scotomas that individuals experience in reality. At present, there are few empirical evaluations of visual impairment simulations and no simulation has been implemented in real time with eye tracking. We intend to address both of these concerns in future work. 
 
 
 <h2>Acknowledgments</h2>
