@@ -11,29 +11,51 @@ reality (VR) provides a unique opportunity for normally sighted people to experi
 <h3>Visual Impairments</h3>
 <p>An estimated 2.9 million Americans are diagnosed with low vision, in which vision is impaired to the degree that it cannot be corrected with glasses alone [1]. The visual impairments expressed by low vision conditions are heterogenous and may therefore vary widely between conditions and even between patients with the same condition. There are several types of visual field loss to consider for simulation:
 </p>
-<ul>
+<ol type="A">
   <li> <b>Scotoma —</b> a partial loss of vision or a blind spot, surrounded by normal vision (e.g. diabetic retinopathy) </li>
   <li> <b>Central Scotoma —</b> loss of central vision (e.g. age-related macular degeneration, optic neuropathy) </li>
   <li> <b>Peripheral Scotoma —</b> loss of peripheral vision (e.g. glaucoma, retinal detachment)  </li>
   <li> <b>Hemianopic Scotoma (Hemianopia) —</b>  binocular vision loss in each eye’s hemifield (e.g. optic nerve damage) 
-    <ul>
+    <ol>
       <li> <b>Homonymous —</b> loss of half of vision on the same side in both eyes (left or right) </li>
       <li> <b>Heteronymous —</b> loss of half of vision on different sides in both eyes (binasal or bitemporal) </li>
-    </ul>
+    </ol>
   </li>
-</ul>
-![HVFA Data Example](LowVisionFigures/hvfa.png)
+</ol>
+
+<p align="center">
+  <img width="600" src="LowVisionFigures/TypesOfVisionImpairments.png" alt="Low vision conditions illustrated"> 
+</p>
+
+
+
+
 
 
 <h1>Data Processing</h1>
 The Humphrey Visual Field Analyzer (HVFA)  measures retinal sensitivity at specific points in a patient’s field of view. Our simulation processes raw values from the 30-2 protocol, which measures 30° temporally and nasally with 76 points. Data processing was conducted in Python. 
 
+<p align="center">
+<img width="400" src="LowVisionFigures/hvfa.png" alt="Example: 30-2 protocol HVFA data for the right eye [2]"> <br>
+Example: 30-2 protocol HVFA data for the right eye [2].
+</p>
+
 
 <h3>Retinal Sensitivity Conversion</h3>
 Retinal sensitivity values, measured in decibels, are converted to linear scale and normalized in the range of [0-1]. Sensx corresponds to the current sensitivity value and SensV is the maximum sensitivity value. 
 
+<p align="center">
+  <img width="200" src="LowVisionFigures/Sens_Lin_Form.png" alt="Formula for Retinal Sensitivity"> 
+</p>
+
+
 <h3>Interpolation</h3>
 The data points are plotted with gaussian interpolation in order to produce an intensity map. 
+
+<p align="center">
+  <img width="600" src="LowVisionFigures/SensitivityMap.PNG" alt="Normalized sensitivity values and corresponding intensity map"> 
+</p>
+
 
 <h3>Visual Field Match</h3>
 <p> The intensity map is scaled to match the field of view (FOV) and pixel density of the head-mounted display. Edge values of the map are extended outward to complete the periphery. </p>
@@ -47,12 +69,17 @@ The data points are plotted with gaussian interpolation in order to produce an i
 </ul>
 <p> Otherwise, the simulation assumes 960 x 1080 screen dimension and 94 x 104 degree FOV, which matches the specs of the Oculus Rift DK2. See <b> PlatformDefines.cs</b> for more. </p>
 
+<p align="center">
+  <img width="600" src="LowVisionFigures/FOVMap.PNG" alt="Mapping of the HVFA data to the Oculus Rift CV1 pixel resolution and FOV."> 
+</p>
 
 
 <h1>Graphical Results</h1>
 The generated map informs two screen shaders, which render directly to the display. Left and right eye information are processed separately. 
 
-
+<p align="center">
+  <img width="800" src="LowVisionFigures/LowVisionSimResults.PNG" alt="Graphical results display no scotoma, opacity, and blur fields for left and right eyes"> 
+</p>
 
 
 <h2>Acknowledgments</h2>
