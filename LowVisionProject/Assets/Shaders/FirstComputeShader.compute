@@ -1,0 +1,36 @@
+﻿#include "UnityCG.cginc"
+
+#pragma kernel TintMain
+
+float4 Color;
+int SourceHeight;
+int AntiAliasing;
+
+Texture2D<float4> Source;
+RWTexture2D<float4> Destination;
+
+[numthreads(8,8,1)]
+void TintMain (uint3 groupID : SV_GroupID, 
+      // ID of thread group; range depends on Dispatch call
+   uint3 groupThreadID : SV_GroupThreadID, 
+      // ID of thread in a thread group; range depends on numthreads
+   uint groupIndex : SV_GroupIndex, 
+      // flattened/linearized GroupThreadID between 0 and 
+      // numthreads.x * numthreads.y * numthreadz.z - 1 
+   uint3 id : SV_DispatchThreadID) 
+      // = GroupID * numthreads + GroupThreadID
+{
+#if !UNITY_UV_STARTS_AT_TOP
+   Destination[id.xy] = Source[id.xy] * Color;
+#else
+   if (AntiAliasing == 0)
+   {
+      Destination[id.xy] = Source[id.xy] * Color;
+   }
+   else
+   {
+      Destination[id.xy] = 
+         Source[uint2(id.x, SourceHeight - 1 - id.y)] * Color;
+   }
+#endif
+}
