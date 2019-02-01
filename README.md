@@ -1,8 +1,6 @@
 # Immersive Low Vision Simulation
-<p><b> Note: </b> I need to tidy that document and add options for more current displays.</p>
-<p><b> Note: </b> Add Python scripts folder. Explain processing in more detail</p>
-<p><b> Note: </b> Consider adding figures for clarity </p>
-<p><b> Note: </b> See link for how to structure license and copyright disclaimers when make public: https://github.com/guillaume-chevalier/LSTM-Human-Activity-Recognition <p>
+<p><b> Code Notes: </b> I need to tidy that document and add options for more current displays.</p>
+<p><b> GitHub Notes: </b> Add Python scripts folder. Explain processing in more detail.  See link for how to structure license and copyright disclaimers when make public: https://github.com/guillaume-chevalier/LSTM-Human-Activity-Recognition <p>
 
 
 Visual impairments interfere with normal, daily activities such as driving, reading, and walking. By simulating impairments we may better understand how those afflicted perceive and interact with their environment. Virtual 
