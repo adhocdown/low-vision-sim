@@ -34,7 +34,7 @@ public class ScotomaBlur : MonoBehaviour
 		
 	void Awake() { 
         // note: if using Gear: use FastMaskBlur
-        //       else use ??
+        //       else .. still use FastMaskBlur
 		blurMaterial = new Material(Shader.Find("FastMaskBlur"));
 
         if (transform.name == "LeftEyeAnchor")
@@ -49,19 +49,21 @@ public class ScotomaBlur : MonoBehaviour
         hmd = gameManager.GetComponentInParent<PlatformDefines>();
         Debug.Log(hmd);
 
-
+        // scale 
         scaleFactor();
-
     }
 
 
+    // This function handles the screen shader 
     public void OnRenderImage (RenderTexture source, RenderTexture destination) {
 			 
+            // No blur
 			if (blurIterations == 0 && blurSize == 0 && downsample == 0)  {
 				Graphics.Blit (source, destination);
 				return;  
 			 } 	
 
+            // Yes blur 
 			float widthMod = 1.0f / (1.0f * (1<<downsample));			 
 			blurMaterial.SetVector ("_Parameter", new Vector4 (blurSize * widthMod, -blurSize * widthMod, 0.0f, 0.0f));
 			source.filterMode = FilterMode.Bilinear; 
@@ -116,12 +118,15 @@ public class ScotomaBlur : MonoBehaviour
 	}
 
 
+    // Function: Scale scotoma to match pixel count and FOV of VR head-mounted display
+    // Set parameters for shader (translation, scale, mask texture)
 	void scaleFactor() 
 	{		
 		float x_pixel_count = hmd.myHMD.screen_dimension_x * (60 / hmd.myHMD.fov_x);
 		float y_pixel_count = hmd.myHMD.screen_dimension_y * (60 / hmd.myHMD.fov_y); 
 		x_scale = hmd.myHMD.fov_x / 60;  
 		y_scale = hmd.myHMD.fov_y / 60;
+
 		Debug.Log ("pixelcnt:  " + x_pixel_count + ", " + y_pixel_count);
 		Debug.Log ("scale:  " + x_scale + ", " +  y_scale);
 
@@ -133,8 +138,6 @@ public class ScotomaBlur : MonoBehaviour
 		y_trans *= y_scale;
 
 		Debug.Log ("trans:  " + x_trans + ", " +  y_trans);
-		//float x_trans = x_scale / 2;
-		//float y_trans = y_scale / 2;
 
 		// set parameters for shader
 		blurMaterial.SetColor("_MaskColor", maskColor);
@@ -144,11 +147,6 @@ public class ScotomaBlur : MonoBehaviour
 		blurMaterial.SetFloat ("_YTrans", y_trans);
 		blurMaterial.SetTexture("_MaskMapTex", maskTexture);
 
-		//RenderTexture.active = source; 
-		//maskTexture = new Texture2D (source.width, source.height, TextureFormat.RGB24, false);
-		//maskTexture.ReadPixels( new Rect( 0, 0, source.width, source.height), 0, 0); 
-		//maskTexture.Apply();    
-		//blurMaterial.SetTexture("_MaskTex", maskTexture);
 	}
 
 	public void changeMaskTexture(string imgName)
@@ -183,7 +181,7 @@ public class ScotomaBlur : MonoBehaviour
 			break;
 		}
 
-
+        // reassign maskTexture to appropriate scotoma 
 		maskTexture = Resources.Load (texImage, typeof(Texture2D)) as Texture2D;
         changeMaskTexture(texImage);
         //Debug.Log (maskTexture);
