@@ -2,9 +2,9 @@
 Visual impairments interfere with normal, daily activities such as driving, reading, and walking. By simulating impairments we may better understand how those afflicted perceive and interact with their environment. Virtual 
 reality (VR) provides a unique opportunity for normally sighted people to experience visual impairments in first person. Accordingly, we have created an immersive simulation that maps patient data from a Humphrey Visual Field Analyzer (HVFA) to the field of view of a head-mounted display. I developed this simulation in 2017 with Unity, C#, Python, and Cg/HLSL. This version of the simulation contains no actual patient data to ensure privacy and anonymity.
 
-<b> Code Notes: </b> I need to tidy that document and add options for more current displays.
+<b> Code Notes: </b> Unity: I need to tidy the code and add options for more current displays.  I also generally need to explain processing in more detail through comments. Python: Added Python scripts folder. The current python scripts are sloppy and involve a lot of manual typing to read/write files. 
 
-<b> GitHub Notes: </b> Add Python scripts folder. Explain processing in more detail.  See link for how to structure license and copyright disclaimers when make public: https://github.com/guillaume-chevalier/LSTM-Human-Activity-Recognition 
+<b> GitHub Notes: </b> See link for how to structure license and copyright disclaimers when repo is made public: https://github.com/guillaume-chevalier/LSTM-Human-Activity-Recognition 
 
 
 ### Visual Impairments
